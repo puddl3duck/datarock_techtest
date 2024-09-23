@@ -25,7 +25,4 @@ As provided by Datarock as a technical test, this project implements a checkout 
 
 1. Clone the repository.
 2. Navigate to the project directory.
-3. Install pytest if not already installed:
-
-   ```bash
-   pip install pytest
+3. Install pytest if not already installed
