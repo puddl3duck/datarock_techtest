@@ -26,13 +26,9 @@ class Checkout:
         # MacBook Pro
         total_price += item_counts.get('mbp', 0) * self.pricing_rules['mbp']
         
-        # Count free VGA adapters
+        # VGA adapters
         free_vga_count = item_counts.get('mbp', 0)
-        
-        # Add the price of VGA adapters that are not free
         total_price += item_counts.get('vga', 0) * self.pricing_rules['vga']
-        
-        # Subtract the price of the free VGA adapters
-        total_price -= free_vga_count * self.pricing_rules['vga']  # This effectively makes them free
+        total_price -= free_vga_count * self.pricing_rules['vga']
 
         return total_price
