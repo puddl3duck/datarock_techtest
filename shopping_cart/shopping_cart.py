@@ -10,20 +10,29 @@ class Checkout:
         total_price = 0
         item_counts = {sku: self.scanned_items.count(sku) for sku in self.pricing_rules.keys()}
 
-        # Apply special rules
+        # AppleTV 3 for 2 deal
         if item_counts.get('atv', 0) >= 3:
             total_price += (item_counts['atv'] // 3) * 2 * self.pricing_rules['atv'] + \
                            (item_counts['atv'] % 3) * self.pricing_rules['atv']
         else:
             total_price += item_counts.get('atv', 0) * self.pricing_rules['atv']
 
+        # Super IPad bulk discount
         if item_counts.get('ipd', 0) > 4:
             total_price += item_counts['ipd'] * 499.99
         else:
             total_price += item_counts.get('ipd', 0) * self.pricing_rules['ipd']
 
-        # Free VGA adapter for each MacBook Pro
+        # MacBook Pro
         total_price += item_counts.get('mbp', 0) * self.pricing_rules['mbp']
+        
+        # Count free VGA adapters
+        free_vga_count = item_counts.get('mbp', 0)
+        
+        # Add the price of VGA adapters that are not free
         total_price += item_counts.get('vga', 0) * self.pricing_rules['vga']
+        
+        # Subtract the price of the free VGA adapters
+        total_price -= free_vga_count * self.pricing_rules['vga']  # This effectively makes them free
 
         return total_price

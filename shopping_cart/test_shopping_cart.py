@@ -1,6 +1,5 @@
-import pytest
 import pandas as pd
-from typing import List
+import pytest
 from shopping_cart import Checkout
 
 pricing_rules = {
@@ -12,7 +11,7 @@ pricing_rules = {
 
 @pytest.fixture
 def checkout_data() -> pd.DataFrame:
-    # Create a DataFrame with the test cases
+    # DataFrame with test cases/scenarios provided
     data = {
         'skus': [
             ['atv', 'atv', 'atv', 'vga'],  # Scenario 1
@@ -33,4 +32,4 @@ def test_checkout(checkout_data: pd.DataFrame) -> None:
         co = Checkout(pricing_rules)
         for sku in row['skus']:
             co.scan(sku)
-        assert co.total() == pytest.approx(row['expected_total'], rel=1e-2)
+        assert co.total() == row['expected_total']
